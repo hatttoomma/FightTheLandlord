@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    void SetBackground();
+    void SetBackground(std::string s);
     void NewGame();
     void RestartGame();
     void addcards(int player);
@@ -27,6 +27,10 @@ public:
     bool endgame();
     void ingame();
     ~MainWindow();
+
+
+    int activepage;
+    std::string color_of_back;
     card1 *c[54];
     int decided;
     int flag_calllandlord;
@@ -35,6 +39,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+protected:
+    void changeEvent(QEvent * event);
 
 signals:
     void end_of_turn(int player,int turn);

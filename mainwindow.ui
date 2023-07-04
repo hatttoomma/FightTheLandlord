@@ -24,16 +24,16 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QPushButton" name="Button_Restart">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>20</y>
+        <x>590</x>
+        <y>510</y>
         <width>80</width>
-        <height>18</height>
+        <height>21</height>
        </rect>
       </property>
       <property name="cursor">
@@ -126,6 +126,19 @@
        <string>your turn!</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="Button_Settings">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设置</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QLabel" name="label">
@@ -184,6 +197,153 @@
       </property>
       <property name="text">
        <string>Quit</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_3">
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>40</y>
+        <width>40</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设置</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Button_setbackground">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>100</y>
+        <width>80</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>背景</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Button_setsound">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>130</y>
+        <width>80</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>声音</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Button_quitsettings">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>160</y>
+        <width>80</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>返回</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_4">
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>50</y>
+        <width>40</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设置背景</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_purple">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>120</y>
+        <width>73</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>紫</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_blue">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>160</y>
+        <width>73</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>蓝</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_snow">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>200</y>
+        <width>73</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>雪</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_night">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>240</y>
+        <width>73</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>夜</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_melon">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>280</y>
+        <width>73</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>吃瓜！</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_quitforsettings">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>330</y>
+        <width>80</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>返回设置</string>
       </property>
      </widget>
     </widget>

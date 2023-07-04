@@ -10,13 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    //this->setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(Qt::Window);
+    setWindowFlags(windowFlags()&~Qt::WindowMaximizeButtonHint);    // 禁止最大化按钮
+    //setFixedSize(this->width(),this->height());                     // 禁止拖动窗口大小
     ui->setupUi(this);
     setWindowTitle("FightTheLandlord");
     ui->stackedWidget->setCurrentIndex(1);
     ui->Button_Playcard->hide();
-
+    activepage=1;
     connect(ui->Button_Play,&QPushButton::clicked,this,[=](){
         ui->Button_Play->hide();
         ui->Button_Playcard->show();
@@ -24,7 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
         ui->radioButton->hide();
         ui->radioButton_2->hide();
         ui->stackedWidget->setCurrentIndex(0);
-        SetBackground();
+        activepage=0;
+        color_of_back="purple";
+        SetBackground(color_of_back);
         NewGame();
     });
     connect(ui->Button_Restart,&QPushButton::clicked,this,[=](){
@@ -34,22 +37,99 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->Button_Back,&QPushButton::clicked,this,[=](){
         setStyleSheet("");
         ui->stackedWidget->setCurrentIndex(1);
+        activepage=1;
         ui->Button_Play->show();
         ui->Button_Playcard->hide();
         for (int i = 0; i < 54; ++i) {
             c[i]->hide();
         }
     });
+    connect(ui->Button_Settings,&QPushButton::clicked,this,[=](){
+        setStyleSheet("");
+        ui->stackedWidget->setCurrentIndex(2);
+        ui->Button_Play->hide();
+        ui->Button_Playcard->hide();
+        if(activepage==0)
+        {
+            for (int i = 0; i < 54; ++i) {
+                c[i]->hide();
+            }
+        }
+    });
+    connect(ui->Button_quitsettings,&QPushButton::clicked,this,[=](){
+        if(activepage){
+            ui->stackedWidget->setCurrentIndex(1);
+            ui->Button_Play->show();
+            ui->Button_Playcard->hide();
+        }
+        else{
+            ui->stackedWidget->setCurrentIndex(0);
+            SetBackground(color_of_back);
+            for (int i = 0; i < 54; ++i) {
+                c[i]->show();
+            }
+        }
+    });
+    connect(ui->Button_setbackground,&QPushButton::clicked,this,[=](){
+        ui->stackedWidget->setCurrentIndex(3);
+    });
+    connect(ui->pushButton_quitforsettings,&QPushButton::clicked,this,[=](){
+        ui->stackedWidget->setCurrentIndex(2);
+    });
+    connect(ui->pushButton_quitforsettings,&QPushButton::clicked,this,[=](){
+        ui->stackedWidget->setCurrentIndex(2);
+    });
+    connect(ui->radioButton_purple,&QPushButton::clicked,this,[=](){
+        color_of_back="purple";
+    });
+    connect(ui->radioButton_blue,&QPushButton::clicked,this,[=](){
+        color_of_back="blue";
+    });
+    connect(ui->radioButton_snow,&QPushButton::clicked,this,[=](){
+        color_of_back="snow";
+    });
+    connect(ui->radioButton_night,&QPushButton::clicked,this,[=](){
+        color_of_back="night";
+    });
+    connect(ui->radioButton_melon,&QPushButton::clicked,this,[=](){
+        color_of_back="melon";
+    });
 }
 
-void MainWindow::SetBackground(){
+void MainWindow::SetBackground(std::string s){
     this->setObjectName("mainScreen");
-    setStyleSheet("QMainWindow#mainScreen{border-image:url(:/p/backgrounds/background_purple.png);}");
+    if(s=="purple")
+    {
+        setStyleSheet("QMainWindow#mainScreen{border-image:url(:/p/backgrounds/background_purple.png);}");
+    }
+    if(s=="blue")
+    {
+        setStyleSheet("QMainWindow#mainScreen{border-image:url(:/p/backgrounds/background_blue.png);}");
+    }
+    if(s=="snow")
+    {
+        setStyleSheet("QMainWindow#mainScreen{border-image:url(:/p/backgrounds/background_snow.png);}");
+    }
+    if(s=="night")
+    {
+        setStyleSheet("QMainWindow#mainScreen{border-image:url(:/p/backgrounds/background_night.png);}");
+    }
+    if(s=="melon")
+    {
+        setStyleSheet("QMainWindow#mainScreen{border-image:url(:/p/backgrounds/background_melon.png);}");
+    }
 }
 
 void MainWindow::NewGame(){
     generate_array();
     //player Player[3];
+    for(int i=0;i<3;i++){
+        Player[i].active=0;
+        Player[i].cardNumber=17;
+        Player[i].landlord=0;
+        Player[i].turns=0;
+        memset(Player[i].cards,0,sizeof(Player[i].cards));
+    }
     decided=0;
     for (int i = 0; i < 54; ++i) {
         int col=(Myarray[i]-1)/13;
@@ -221,6 +301,7 @@ bool MainWindow::endgame(){
 
 void MainWindow::ingame(){
     if(endgame())return;
+    //
         Player[0].active=1;
         QString s=QString::number(Player[0].turns);
 
@@ -273,4 +354,24 @@ void MainWindow::on_Button_Playcard_clicked()
 {
     emit end_of_turn(0,Player[0].turns);
 }
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if(QEvent::WindowStateChange == event->type()){
+        QWindowStateChangeEvent * stateEvent = dynamic_cast<QWindowStateChangeEvent*>(event);
+        if(Q_NULLPTR != stateEvent){
+            if(Qt::WindowMinimized == stateEvent->oldState()){
+                for(int i=0;i<54;i++){
+                    c[i]->show();
+                }
+            }
+            else if(Qt::WindowNoState == stateEvent->oldState()){
+                for(int i=0;i<54;i++){
+                    c[i]->hide();
+                }
+            }
+        }
+    }
+}
+
 
