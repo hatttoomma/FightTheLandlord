@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QPushButton" name="Button_Restart">
@@ -126,7 +126,7 @@
        <string>your turn!</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Button_Settings">
+     <widget class="QPushButton" name="Button_Settings_0">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -197,6 +197,19 @@
       </property>
       <property name="text">
        <string>Quit</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Button_Settings_1">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>510</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>设置</string>
       </property>
      </widget>
     </widget>

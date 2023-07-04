@@ -44,17 +44,20 @@ MainWindow::MainWindow(QWidget *parent)
             c[i]->hide();
         }
     });
-    connect(ui->Button_Settings,&QPushButton::clicked,this,[=](){
+    connect(ui->Button_Settings_0,&QPushButton::clicked,this,[=](){
         setStyleSheet("");
         ui->stackedWidget->setCurrentIndex(2);
         ui->Button_Play->hide();
         ui->Button_Playcard->hide();
-        if(activepage==0)
-        {
             for (int i = 0; i < 54; ++i) {
                 c[i]->hide();
             }
-        }
+    });
+    connect(ui->Button_Settings_1,&QPushButton::clicked,this,[=](){
+        setStyleSheet("");
+        ui->stackedWidget->setCurrentIndex(2);
+        ui->Button_Play->hide();
+        ui->Button_Playcard->hide();
     });
     connect(ui->Button_quitsettings,&QPushButton::clicked,this,[=](){
         if(activepage){
