@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include "card1.h"
+#include "progress.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -25,13 +26,15 @@ public:
     void sortcards(int num_card);
 
     bool endgame();
-    void ingame();
+    void ingame(int game);
     ~MainWindow();
 
 
     int activepage;
+    int num_games;
     std::string color_of_back;
     card1 *c[54];
+    progress pro;
     int decided;
     int flag_calllandlord;
     int starttime_of_call;
@@ -44,11 +47,11 @@ protected:
     void changeEvent(QEvent * event);
 
 signals:
-    void end_of_turn(int player,int turn);
+    void end_of_turn(int player,int turn,int game);
 private slots:
     void on_Button_Playcard_clicked();
 public slots:
-    void end_of_play(int player,int turn);
+    void end_of_play(int player,int turn,int game);
 };
 
 #endif // MAINWINDOW_H

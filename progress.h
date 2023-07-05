@@ -1,0 +1,22 @@
+
+#ifndef PROGRESS_H
+#define PROGRESS_H
+
+
+#include <QLabel>
+#include <QObject>
+#include <QWidget>
+#include <QPropertyAnimation>
+#include <qparallelanimationgroup.h>
+
+
+class progress:public QLabel
+{
+    Q_OBJECT
+public:
+    explicit progress(QWidget* parent=nullptr);
+    ~progress();
+    void anime();
+};
+
+#endif // PROGRESS_H

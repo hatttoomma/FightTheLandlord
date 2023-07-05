@@ -11,16 +11,22 @@ CONFIG += c++17
 SOURCES += \
     card1.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    progress.cpp \
+    reward.cpp
 
 HEADERS += \
+    AI.h \
     card1.h \
     mainwindow.h \
     player.h \
-    randomArray.h
+    progress.h \
+    randomArray.h \
+    reward.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    reward.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

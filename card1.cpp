@@ -11,7 +11,7 @@ card1::card1(int n,int _color ,int _point,bool _emerged)
     picked=0;
     isend=0;
     used=0;
-    this->setWindowFlags(Qt::SubWindow | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(Qt::SubWindow | Qt::FramelessWindowHint |Qt::WindowStaysOnTopHint );
     if(emerged) this->setStyleSheet(cardpath[color][point]);
     else this->setStyleSheet("border-image:url(:/p/cards/back.png);");
 };

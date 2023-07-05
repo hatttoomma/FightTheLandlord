@@ -3,8 +3,8 @@
 #include "player.h"
 #include "randomArray.h"
 #include "ui_mainwindow.h"
+#include "reward.h"
 #include <iostream>
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,12 +18,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(1);
     ui->Button_Playcard->hide();
     activepage=1;
+    num_games=0;
     connect(ui->Button_Play,&QPushButton::clicked,this,[=](){
         ui->Button_Play->hide();
         ui->Button_Playcard->show();
         ui->pushButton->hide();
         ui->radioButton->hide();
         ui->radioButton_2->hide();
+        ui->label_3->hide();
         ui->stackedWidget->setCurrentIndex(0);
         activepage=0;
         color_of_back="purple";
@@ -125,7 +127,9 @@ void MainWindow::SetBackground(std::string s){
 
 void MainWindow::NewGame(){
     generate_array();
+    num_games++;
     //player Player[3];
+    pro.hide();
     for(int i=0;i<3;i++){
         Player[i].active=0;
         Player[i].cardNumber=17;
@@ -222,7 +226,7 @@ void MainWindow::NewGame(){
                     });
                 }
             }
-            ingame();
+            ingame(num_games);
         });
         connect(ui->pushButton,&QPushButton::clicked,this,[&](){
             //cout<<decided<<endl<<ui->radioButton->isChecked()<<endl<<ui->radioButton_2->isChecked()<<endl;
@@ -270,7 +274,7 @@ void MainWindow::NewGame(){
                     });
                 }
             }
-            ingame();
+            ingame(num_games);
         });
     }
 }
@@ -302,19 +306,22 @@ bool MainWindow::endgame(){
     return Player[0].cardNumber==0||Player[1].cardNumber==0||Player[2].cardNumber==0;
 }
 
-void MainWindow::ingame(){
+void MainWindow::ingame(int game){
     if(endgame())return;
     //
+    if(Player[0].active)return;
         Player[0].active=1;
         QString s=QString::number(Player[0].turns);
 
-        ui->label_3->setText(s);
-        ui->label_3->show();
+        //ui->label_3->setText(s);
+        //ui->label_3->show();
+        pro.show();
+        pro.anime();
         QTimer::singleShot(10000,[&](){
-            emit end_of_turn(0,Player[0].turns);
+            emit end_of_turn(0,Player[0].turns,game);
             //player1 play
             //player2 play
-            ingame();
+            ingame(game);
         });
 
     connect(this,&MainWindow::end_of_turn,this,&MainWindow::end_of_play);
@@ -328,14 +335,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::end_of_play(int player,int turn){
-    if(Player[player].active&&Player[player].turns==turn){
-        ui->label_3->hide();
+void MainWindow::end_of_play(int player, int turn, int game){
+    if(Player[player].active&&Player[player].turns==turn&&game==num_games){
+        pro.hide();
+        //ui->label_3->hide();
         Player[player].turns++;
         Player[player].active=0;
         int card_remain=0;
         int last_card=0;
-        for(int j=0;j<Player[player].cardNumber;j++){
+        for(int j=0;j<(Player[player].landlord?20:17);j++){
             if(!c[j]->picked&&!c[j]->used){
                 last_card=j;
                 c[j]->move(18*card_remain+this->x()+this->width()/2-168,500+this->y());
@@ -347,15 +355,20 @@ void MainWindow::end_of_play(int player,int turn){
             }
         }
         c[last_card]->isend=1;
-        for(int j=0;j<Player[player].cardNumber;j++){
+        Player[player].cardNumber=card_remain;
+        for(int j=0;j<(Player[player].landlord?20:17);j++){
             c[j]->reshow();
+        }
+        if(endgame()){
+            reward r;
+            r.show();
         }
     }
 }
 
 void MainWindow::on_Button_Playcard_clicked()
 {
-    emit end_of_turn(0,Player[0].turns);
+    emit end_of_turn(0,Player[0].turns,num_games);
 }
 
 void MainWindow::changeEvent(QEvent *event)
