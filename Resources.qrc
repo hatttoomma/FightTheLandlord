@@ -114,5 +114,6 @@
         <file>p/cards/s10h.png</file>
         <file>p/cards/sjh.png</file>
         <file>p/cards/sqh.png</file>
+        <file>p/music/background.wav</file>
     </qresource>
 </RCC>
